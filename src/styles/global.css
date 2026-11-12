@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+  --orange: #ff5a0a;
+  --ink: #111;
+  --muted: #55524e;
+  --bg: #f7f6f4;
+  --nav-h: 72px;
+}
+@media (min-width: 900px) { :root { --nav-h: 88px; } }
+
+html { scroll-behavior: smooth; }
+body { margin: 0; }
+
+.rmt-root { font-family: "Poppins", system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+.rmt-root *, .rmt-root *::before, .rmt-root *::after { box-sizing: border-box; }
+.rmt-root a:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 6px; }
+
+/* shared section typography */
+.eyebrow { margin: 0 0 16px; font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--orange); }
+.section-title { margin: 0; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.05; font-weight: 600; letter-spacing: -.03em; }
+.section-title em { font-style: normal; color: var(--orange); }

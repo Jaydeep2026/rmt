@@ -1,0 +1,46 @@
+.rmt-hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  background: radial-gradient(90% 70% at 0% 100%, #ebe9e6 0%, transparent 60%),
+    var(--bg);
+}
+.rmt-ribbon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(62vw, 760px);
+  height: auto;
+  pointer-events: none;
+}
+.rmt-hero__chev {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  transform: rotate(45deg);
+  opacity: 0;
+  animation: chev 1.8s ease-in-out 3.4s infinite;
+}
+@keyframes chev {
+  0%,
+  100% {
+    opacity: 0.15;
+    translate: 0 0;
+  }
+  50% {
+    opacity: 0.8;
+    translate: 0 6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rmt-hero__chev {
+    animation: none;
+    opacity: 0.6;
+  }
+}

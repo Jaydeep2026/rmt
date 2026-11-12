@@ -1,0 +1,129 @@
+.work {
+  padding: 100px 40px;
+  scroll-margin-top: var(--nav-h);
+}
+.work__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.work__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.work__nav {
+  display: flex;
+  gap: 10px;
+}
+.work__nav button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid rgba(17, 17, 17, 0.15);
+  transition: transform 0.2s, background-color 0.2s, opacity 0.2s;
+}
+.work__nav button.is-dark {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.work__nav button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.work__nav button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.work__track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.work__track::-webkit-scrollbar {
+  display: none;
+}
+.work__card {
+  flex: 0 0 clamp(280px, 31vw, 410px);
+  scroll-snap-align: start;
+}
+.work__img {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 16 / 10;
+  padding: 20px;
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  transition: transform 0.35s;
+}
+.work__card:hover .work__img {
+  transform: translateY(-5px);
+}
+.work__label {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+}
+.work__card h3 {
+  margin: 16px 0 2px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.work__card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.work__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 17, 17, 0.2);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s, gap 0.2s;
+}
+.work__btn:hover {
+  background: var(--ink);
+  color: #fff;
+  gap: 14px;
+}
+
+@media (max-width: 899px) {
+  .work {
+    padding: 72px 20px;
+  }
+  .work__head {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 32px;
+  }
+  .work__head br {
+    display: none;
+  }
+  .work__card {
+    flex-basis: 80vw;
+  }
+}
