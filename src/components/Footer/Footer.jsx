@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="footer__inner">
         <a className="footer__brand" href="#top" aria-label="RMT by Verligte">
           <img
-            src="public/rmt-logo.png"
+            src="/images/rmt-logo.png"
             alt="React Material Template by Verligte"
           />
         </a>
