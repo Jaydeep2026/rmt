@@ -6,7 +6,6 @@
   scroll-margin-top: var(--nav-h);
   background: radial-gradient(
       60% 55% at 0% 100%,
-      rgba(255, 90, 10, 0.55),
       transparent 70%
     ),
     #0d0d0d;

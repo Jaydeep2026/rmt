@@ -23,12 +23,13 @@ export default function Contact() {
     <section className="contact" id="contact">
       <div className="contact__inner">
         <div className="contact__copy">
-          <p className="eyebrow">Get in touch</p>
+          
           <h2 className="section-title">Have a project <em>in mind?</em></h2>
+          
           <p className="contact__text">
-            Tell us about your business, what you need, and the budget you’re working with. RMT takes it from there.
+            Tell us what you're looking to build. Share your requirements and budget, and let's get your website underway.
           </p>
-          <p className="contact__note"><span /> Currently accepting projects from businesses worldwide.</p>
+          <p className="contact__note"><span /> Currently accepting projects from businesses across India.</p>
         </div>
 
         <form className="contact__form" onSubmit={submit} noValidate>
@@ -44,12 +45,12 @@ export default function Contact() {
           <label>Phone / WhatsApp
             <input name="phone" type="tel" value={v.phone} onChange={set} placeholder="+91 00000 00000" autoComplete="tel" />
           </label>
-          <label className="full">Approximate Budget
+          {/* <label className="full">Approximate Budget
             <select name="budget" value={v.budget} onChange={set}>
               <option value="">Select an option</option>
               {BUDGETS.map((b) => <option key={b}>{b}</option>)}
             </select>
-          </label>
+          </label> */}
           <label className="full">Tell us about your project
             <textarea name="message" rows="4" value={v.message} onChange={set} placeholder="Project goals, features, timeline…" />
           </label>

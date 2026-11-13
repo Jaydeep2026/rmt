@@ -2,11 +2,11 @@ import useInView from "../../hooks/useInView.js";
 import "./HowItWorks.css";
 
 const STEPS = [
-  { title: "Understand", text: "We learn about your business, goals, and audience." },
-  { title: "Shape", text: "We establish the layout, direction, and content structure." },
-  { title: "Refine", text: "We bridge together the design with clarity and detail." },
-  { title: "Build", text: "We develop your responsive website using modern technology." },
-  { title: "Launch", text: "We test, optimize, and get your website ready for the world." },
+  { title: "Website Brief & Content", text: "Share your business details, website requirements and content with us." },
+  { title: "Sitemap & Scope of Work", text: "We map out the website structure, pages and deliverables for your approval." },
+  { title: "Layout Development", text: "We bring your content to life through a distinctive layout using our RMT framework." },
+  { title: "Client Submission & Corrections", text: "Review your website, share feedback and we'll make the agreed refinements." },
+  { title: "Go Live", text: "Once approved, we deploy your website and get your business online." },
 ];
 
 export default function HowItWorks() {
