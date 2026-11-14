@@ -1,4 +1,5 @@
-import { useRef } from "react";
+
+import { useRef, useState } from "react";
 import useLogoDock from "./hooks/useLogoDock.js";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Logo from "./components/Logo/Logo.jsx";
@@ -12,19 +13,28 @@ import Footer from "./components/Footer/Footer.jsx";
 export default function App() {
   const navRef = useRef(null);
   const logoRef = useRef(null);
+  const [navbarVisible, setNavbarVisible] = useState(false);
+
   useLogoDock(logoRef, navRef);
 
   return (
     <div className="rmt-root">
-      <Navbar ref={navRef} />
-      <Logo ref={logoRef} />
+      <Navbar ref={navRef} visible={navbarVisible} />
+
+      <Logo
+        ref={logoRef}
+        onAnimationComplete={() => setNavbarVisible(true)}
+      />
+
       <Hero />
+
       <main>
         <About />
         <HowItWorks />
         <Portfolio />
         <Contact />
       </main>
+
       <Footer />
     </div>
   );

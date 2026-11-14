@@ -22,6 +22,14 @@
   transform-origin: center;
 }
 
+.rmt-logo .sq {
+  rotate: 0deg;
+  transition: rotate 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.rmt-logo .sq:hover {
+  rotate: 90deg;
+}
 /* 1) orange squares fly in */
 .sq {
   opacity: 0;
@@ -105,4 +113,7 @@
     animation-duration: 0.01s !important;
     animation-delay: 0s !important;
   }
+  .rmt-logo .sq {
+  transition: none;
+}
 }

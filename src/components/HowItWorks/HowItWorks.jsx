@@ -15,9 +15,21 @@ export default function HowItWorks() {
   return (
     <section className={`how ${seen ? "is-in" : ""}`} id="how">
       <div className="how__inner">
-        <p className="eyebrow">How it works</p>
-        <h2 className="section-title">From idea to <em>live website.</em></h2>
+        <div className="how__heading">
+          <h2 className="how__title">
+            How it <em>works.</em>
+          </h2>
 
+          <h3 className="how__subtitle">
+            From brief to live website.
+          </h3>
+
+          <p className="how__intro">
+            A simple, structured process to take your website from planning to launch.
+          </p>
+        </div>
+        {/* <h2 className="section-title">How it <em>works</em></h2>
+        <p className="eyebrow">A simple, structured process to take your website from planning to launch.</p> */}
         <ol className="how__steps" ref={ref}>
           {STEPS.map((s, i) => (
             <li className="how__step" key={s.title} style={{ "--i": i }}>

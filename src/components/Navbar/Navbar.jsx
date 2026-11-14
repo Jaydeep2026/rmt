@@ -10,7 +10,7 @@ const LINKS_RIGHT = [
   { label: "Portfolio", href: "#portfolio" },
 ];
 
-const Navbar = forwardRef(function Navbar(_, ref) {
+const Navbar = forwardRef(function Navbar({ visible }, ref) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
 
@@ -63,7 +63,10 @@ const Navbar = forwardRef(function Navbar(_, ref) {
 
   return (
     <>
-      <header className="rmt-nav" ref={ref}>
+      <header
+        className={`rmt-nav ${visible ? "rmt-nav--visible" : "rmt-nav--hidden"}`}
+        ref={ref}
+      >
         <div className="rmt-nav__inner">
           <nav className="rmt-nav__side" aria-label="Primary">
             <button
