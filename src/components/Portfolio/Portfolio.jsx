@@ -1,142 +1,135 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Portfolio.css";
 
 const WORK = [
   {
+    id: "ajr-website",
+    name: "AJR Infra & Tolling Limited",
+    type: "Corporate Website",
+    description:
+      "A professional corporate website showcasing company information, infrastructure projects, investor relations, corporate governance and business updates.",
+    featuredImage: "/images/portfolio/ajr-featured.jpg",
+    modalImage: "/images/portfolio/ajr-modal.jpg",
+    url: "https://www.ajrinfra.in",
+  },
+  {
+    id: "hotel-alif",
     name: "Hotel Alif International",
     type: "Hospitality",
     description:
-      "A welcoming digital presence showcasing the hotel’s accommodation, facilities and guest experience in Mumbai.",
-    image:
+      "A welcoming digital presence showcasing the hotel's accommodation, facilities and guest experience in Mumbai.",
+    featuredImage:
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85",
+    modalImage:
       "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=85",
     url: "https://example.com",
   },
   {
+    id: "studio-forma",
     name: "Studio Forma",
     type: "Architecture",
     description:
       "A refined digital experience highlighting architectural projects, creative spaces and contemporary design.",
-    image:
+    featuredImage:
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85",
+    modalImage:
       "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85",
     url: "https://example.com",
   },
   {
+    id: "nova-advisors",
     name: "Nova Advisors",
     type: "Professional Services",
     description:
       "A professional website designed to communicate expertise, services and business credibility.",
-    image:
+    featuredImage:
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85",
+    modalImage:
       "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=85",
     url: "https://example.com",
   },
   {
+    id: "atelier-noor",
     name: "Atelier Noor",
     type: "Retail",
     description:
       "A modern online presence showcasing products, brand identity and a distinctive shopping experience.",
-    image:
+    featuredImage:
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=85",
+    modalImage:
       "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85",
     url: "https://example.com",
   },
 ];
 
-const ArrowIcon = ({ direction = "right" }) => (
-  <svg
-    viewBox="0 0 24 24"
-    width="20"
-    height="20"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{
-      transform: direction === "left" ? "rotate(180deg)" : "none",
-    }}
-    aria-hidden="true"
-  >
+const ArrowIcon = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+    stroke="currentColor" strokeWidth="1.8"
+    strokeLinecap="round" strokeLinejoin="round">
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
 
 const CloseIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    width="21"
-    height="21"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-  >
+  <svg viewBox="0 0 24 24" width="21" height="21" fill="none"
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round">
     <path d="m18 6-12 12M6 6l12 12" />
   </svg>
 );
 
 const CategoryIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    width="21"
-    height="21"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.7"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
+  <svg viewBox="0 0 24 24" width="21" height="21" fill="none"
+    stroke="currentColor" strokeWidth="1.7"
+    strokeLinecap="round" strokeLinejoin="round">
     <rect x="3" y="7" width="18" height="13" rx="2" />
     <path d="M7 7V4h10v3M7 20v-5h4v5M15 20v-5h4v5" />
   </svg>
 );
 
 const ExternalIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    width="22"
-    height="22"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+    stroke="currentColor" strokeWidth="2"
+    strokeLinecap="round" strokeLinejoin="round">
     <path d="M7 17 17 7M7 7h10v10" />
   </svg>
 );
 
 export default function Portfolio() {
-  const track = useRef(null);
   const [selected, setSelected] = useState(null);
-  const [edge, setEdge] = useState({ start: true, end: false });
+  const [showAll, setShowAll] = useState(false);
 
-  const sync = () => {
-    const el = track.current;
-    if (!el) return;
-
-    setEdge({
-      start: el.scrollLeft <= 8,
-      end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8,
-    });
-  };
-
+  // Open project automatically from URL hash
   useEffect(() => {
-    sync();
+    const openProjectFromHash = () => {
+      const projectId = window.location.hash.replace("#", "");
 
-    const el = track.current;
-    if (!el) return;
+      if (!projectId) {
+        setSelected(null);
+        return;
+      }
 
-    el.addEventListener("scroll", sync);
-    window.addEventListener("resize", sync);
+      const project = WORK.find((item) => item.id === projectId);
+
+      if (project) {
+        setSelected(project);
+        document.getElementById("portfolio")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    };
+
+    openProjectFromHash();
+
+    window.addEventListener("hashchange", openProjectFromHash);
 
     return () => {
-      el.removeEventListener("scroll", sync);
-      window.removeEventListener("resize", sync);
+      window.removeEventListener("hashchange", openProjectFromHash);
     };
   }, []);
 
+  // Lock background scrolling when modal is open
   useEffect(() => {
     if (!selected) return;
 
@@ -144,22 +137,8 @@ export default function Portfolio() {
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") setSelected(null);
-
-      if (e.key === "ArrowRight") {
-        setSelected((current) => {
-          if (!current) return null;
-          const index = WORK.findIndex((item) => item.name === current.name);
-          return WORK[(index + 1) % WORK.length];
-        });
-      }
-
-      if (e.key === "ArrowLeft") {
-        setSelected((current) => {
-          if (!current) return null;
-          const index = WORK.findIndex((item) => item.name === current.name);
-          return WORK[(index - 1 + WORK.length) % WORK.length];
-        });
+      if (e.key === "Escape") {
+        closeModal();
       }
     };
 
@@ -171,21 +150,33 @@ export default function Portfolio() {
     };
   }, [selected]);
 
-  const go = (direction) => {
-    const el = track.current;
-    const card = el?.querySelector(".work__card");
+  const openModal = (project) => {
+    setSelected(project);
 
-    if (!el || !card) return;
-
-    el.scrollBy({
-      left: direction * (card.getBoundingClientRect().width + 20),
-      behavior: "smooth",
-    });
+    if (window.location.hash !== `#${project.id}`) {
+      window.history.pushState(null, "", `#${project.id}`);
+    }
   };
+
+  const closeModal = () => {
+    setSelected(null);
+
+    if (window.location.hash) {
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search
+      );
+    }
+  };
+
+  const visibleProjects = showAll ? WORK : WORK.slice(0, 3);
 
   return (
     <section className="work" id="portfolio">
       <div className="work__inner">
+
+        {/* Heading */}
         <div className="work__head">
           <div className="work__heading">
             <h2 className="section-title">
@@ -201,39 +192,19 @@ export default function Portfolio() {
               reliable development and attention to every detail.
             </p>
           </div>
-
-          <div className="work__nav">
-            <button
-              onClick={() => go(-1)}
-              disabled={edge.start}
-              aria-label="Previous"
-              type="button"
-            >
-              <ArrowIcon direction="left" />
-            </button>
-
-            <button
-              onClick={() => go(1)}
-              disabled={edge.end}
-              aria-label="Next"
-              className="is-dark"
-              type="button"
-            >
-              <ArrowIcon direction="right" />
-            </button>
-          </div>
         </div>
 
-        <div className="work__track" ref={track} onScroll={sync}>
-          {WORK.map((item) => (
+        {/* Project Grid */}
+        <div className="work__grid">
+          {visibleProjects.map((item) => (
             <article
               className="work__card"
-              key={item.name}
-              onClick={() => setSelected(item)}
+              key={item.id}
+              onClick={() => openModal(item)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  setSelected(item);
+                  openModal(item);
                 }
               }}
               role="button"
@@ -242,8 +213,8 @@ export default function Portfolio() {
             >
               <div className="work__img">
                 <img
-                  src={item.image}
-                  alt={`${item.name} website preview`}
+                  src={item.featuredImage}
+                  alt={`${item.name} featured preview`}
                   loading="lazy"
                 />
 
@@ -260,17 +231,35 @@ export default function Portfolio() {
           ))}
         </div>
 
+        {/* See More */}
+        {WORK.length > 3 && (
+          <div className="work__more">
+            <button
+              type="button"
+              className="work__more-btn"
+              onClick={() => setShowAll((prev) => !prev)}
+            >
+              {showAll ? "Show Less" : "See More Projects"}
+              <ArrowIcon />
+            </button>
+          </div>
+        )}
+
+        {/* Bottom */}
         <div className="work__bottom">
           <p>Selected projects developed with RMT.</p>
-          <span>{String(WORK.length).padStart(2, "0")} Projects</span>
+          <span>
+            {String(WORK.length).padStart(2, "0")} Projects
+          </span>
         </div>
       </div>
 
+      {/* Project Modal */}
       {selected && (
         <div
           className="work__overlay"
           onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setSelected(null);
+            if (e.target === e.currentTarget) closeModal();
           }}
         >
           <div
@@ -282,7 +271,7 @@ export default function Portfolio() {
             <button
               className="work__close"
               type="button"
-              onClick={() => setSelected(null)}
+              onClick={closeModal}
               aria-label="Close project preview"
             >
               <CloseIcon />
@@ -291,9 +280,10 @@ export default function Portfolio() {
             <div className="work__modal-content">
               <div className="work__preview">
                 <img
-                  src={selected.image}
+                  src={selected.modalImage}
                   alt={`${selected.name} website preview`}
                 />
+
                 <span className="work__preview-caption">
                   Website Preview
                 </span>
@@ -305,6 +295,7 @@ export default function Portfolio() {
                     <span className="work__eyebrow">
                       PROJECT SHOWCASE
                     </span>
+
                     <h2>{selected.name}</h2>
                   </div>
 

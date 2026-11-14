@@ -1,8 +1,4 @@
 
-/* =========================================
-   PORTFOLIO SECTION
-========================================= */
-
 .work {
   padding: 6.25rem 2.5rem;
   scroll-margin-top: var(--nav-h);
@@ -19,16 +15,12 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 30px;
-  margin-bottom: 48px;
+  margin-bottom: 42px;
 }
 
 .work__heading {
   max-width: 850px;
 }
-
-/* =========================================
-   SECTION HEADING
-========================================= */
 
 .work__heading .section-title {
   position: relative;
@@ -58,15 +50,13 @@
   color: var(--orange);
 }
 
-/* Subtitle */
-
 .work__subtitle {
   margin: 0 0 16px;
   font-size: 2.4rem;
   line-height: 1.3;
   font-weight: 500;
   letter-spacing: -0.035em;
-  color: #777777;
+  color: #777;
 }
 
 .work__description {
@@ -77,70 +67,17 @@
   color: var(--muted);
 }
 
-/* =========================================
-   NAVIGATION BUTTONS
-========================================= */
+/* Project Grid */
 
-.work__nav {
-  display: flex;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.work__nav button {
+.work__grid {
   display: grid;
-  place-items: center;
-  width: 2.875rem;
-  height: 2.875rem;
-  border-radius: 50%;
-  cursor: pointer;
-  background: #fff;
-  color: var(--ink);
-  border: 1px solid rgba(17, 17, 17, 0.15);
-  transition: 0.25s ease;
-}
-
-.work__nav button.is-dark {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
-}
-
-.work__nav button:hover:not(:disabled) {
-  transform: translateY(-3px);
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #fff;
-}
-
-.work__nav button:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-/* =========================================
-   PORTFOLIO CAROUSEL
-========================================= */
-
-.work__track {
-  display: flex;
-  gap: 1.25rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  padding-bottom: 0.5rem;
-  overscroll-behavior-x: contain;
-}
-
-.work__track::-webkit-scrollbar {
-  display: none;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem 1.5rem;
 }
 
 .work__card {
-  flex: 0 0 clamp(17.5rem, 31vw, 25.625rem);
-  scroll-snap-align: start;
-  cursor: pointer;
   min-width: 0;
+  cursor: pointer;
 }
 
 .work__img {
@@ -181,7 +118,7 @@
   left: 1.25rem;
   bottom: 1.125rem;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
@@ -203,7 +140,8 @@
   transition: 0.3s ease;
 }
 
-.work__card:hover .work__view {
+.work__card:hover .work__view,
+.work__card:focus-visible .work__view {
   opacity: 1;
   transform: translateY(0);
 }
@@ -221,9 +159,47 @@
   font-size: 0.875rem;
 }
 
-/* =========================================
-   PORTFOLIO BOTTOM
-========================================= */
+/* See More Button */
+
+.work__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.work__more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--ink);
+  border-radius: 0.4rem;
+  background: var(--ink);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.work__more-btn:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: translateY(-3px);
+}
+
+.work__more-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.work__more-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Portfolio Bottom */
 
 .work__bottom {
   display: flex;
@@ -246,9 +222,7 @@
   color: var(--ink);
 }
 
-/* =========================================
-   PORTFOLIO MODAL
-========================================= */
+/* Modal Overlay */
 
 .work__overlay {
   position: fixed;
@@ -301,7 +275,7 @@
   transform: rotate(90deg);
 }
 
-/* Image and details scroll area */
+/* Modal Content */
 
 .work__modal-content {
   min-height: 0;
@@ -320,7 +294,7 @@
   border-radius: 1rem;
 }
 
-/* Preview image */
+/* Modal Image */
 
 .work__preview {
   position: relative;
@@ -356,7 +330,7 @@
   backdrop-filter: blur(8px);
 }
 
-/* Project information */
+/* Project Details */
 
 .work__details {
   padding: 1.75rem 2.25rem 1.5rem;
@@ -400,7 +374,7 @@
   font-weight: 600;
 }
 
-.work__description {
+.work__details .work__description {
   max-width: 48rem;
   margin: 0.875rem 0 0;
   color: #686868;
@@ -408,7 +382,7 @@
   line-height: 1.65;
 }
 
-/* Fixed visible footer */
+/* Modal Footer */
 
 .work__modal-footer {
   position: relative;
@@ -457,9 +431,7 @@
   gap: 0.9rem;
 }
 
-/* =========================================
-   ANIMATIONS
-========================================= */
+/* Animations */
 
 @keyframes work-overlay-in {
   from {
@@ -483,30 +455,21 @@
   }
 }
 
-/* =========================================
-   TABLET RESPONSIVE
-========================================= */
+/* Tablet */
 
 @media (max-width: 899px) {
   .work {
-    padding: 5rem 1.25rem;
-  }
-
-  .work__head {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 24px;
-    margin-bottom: 32px;
+    padding: 5rem 1.5rem;
   }
 
   .work__heading .section-title {
     font-size: 3rem;
+    padding-left: 1.75rem;
   }
 
   .work__heading .section-title::before {
-    width: 15px;
-    height: 15px;
-    margin-right: 12px;
+    width: 0.9rem;
+    height: 0.9rem;
   }
 
   .work__subtitle {
@@ -517,12 +480,9 @@
     font-size: 1rem;
   }
 
-  .work__nav {
-    align-self: flex-end;
-  }
-
-  .work__card {
-    flex-basis: 78vw;
+  .work__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.25rem;
   }
 
   .work__overlay {
@@ -548,36 +508,62 @@
   }
 }
 
-/* =========================================
-   MOBILE RESPONSIVE
-========================================= */
+/* Mobile */
 
 @media (max-width: 560px) {
   .work {
     padding: 4rem 1.125rem;
   }
 
+  .work__head {
+    margin-bottom: 30px;
+  }
+
   .work__heading .section-title {
     font-size: 2.25rem;
+    padding-left: 1.4rem;
   }
 
   .work__heading .section-title::before {
-    width: 11px;
-    height: 11px;
-    margin-right: 10px;
-    border-radius: 2px;
+    width: 0.875rem;
+    height: 0.875rem;
   }
 
   .work__subtitle {
-    font-size: 1.9rem;
+    font-size: 1.65rem;
   }
 
-  .work__card {
-    flex-basis: 85vw;
+  .work__description {
+    font-size: 0.95rem;
+  }
+
+  .work__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .work__img {
     border-radius: 0.75rem;
+  }
+
+  .work__view {
+    opacity: 1;
+    transform: none;
+    width: 2.375rem;
+    height: 2.375rem;
+  }
+
+  .work__label {
+    font-size: 0.95rem;
+  }
+
+  .work__more {
+    margin-top: 2.25rem;
+  }
+
+  .work__more-btn {
+    width: 100%;
+    max-width: 240px;
   }
 
   .work__bottom {
@@ -625,7 +611,7 @@
     font-size: 0.8rem;
   }
 
-  .work__description {
+  .work__details .work__description {
     margin-top: 0.875rem;
     font-size: 0.9rem;
   }
@@ -653,9 +639,7 @@
   }
 }
 
-/* =========================================
-   REDUCED MOTION
-========================================= */
+/* Reduced Motion */
 
 @media (prefers-reduced-motion: reduce) {
   .work__overlay,
@@ -664,32 +648,9 @@
   }
 
   .work__card *,
-  .work__nav button,
+  .work__more-btn,
   .work__close,
   .work__visit {
     transition: none;
-  }
-}
-@media (max-width: 899px) {
-  .work__heading .section-title {
-    font-size: 3rem;
-    padding-left: 1.75rem;
-  }
-
-  .work__heading .section-title::before {
-    width: 0.9rem;
-    height: 0.9rem;
-  }
-}
-
-@media (max-width: 560px) {
-  .work__heading .section-title {
-    font-size: 2.25rem;
-    padding-left: 1.4rem;
-  }
-
-  .work__heading .section-title::before {
-    width: 0.875rem;
-    height: 0.875rem;
   }
 }
