@@ -1,9 +1,11 @@
 
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { LOGO } from "./logoPaths.js";
 import "./Logo.css";
 
 const Logo = forwardRef(function Logo({ onAnimationComplete }, ref) {
+  const [animationComplete, setAnimationComplete] = useState(false);
+
   const goTop = (e) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -11,9 +13,16 @@ const Logo = forwardRef(function Logo({ onAnimationComplete }, ref) {
 
   const byLetters = [...LOGO.by, ...LOGO.verligte];
 
+  const handleLastLetterAnimation = () => {
+    if (animationComplete) return;
+
+    setAnimationComplete(true);
+    onAnimationComplete?.();
+  };
+
   return (
     <a
-      className="rmt-logo"
+      className={`rmt-logo ${animationComplete ? "rmt-logo--complete" : ""}`}
       ref={ref}
       href="#top"
       onClick={goTop}
@@ -77,7 +86,7 @@ const Logo = forwardRef(function Logo({ onAnimationComplete }, ref) {
               fillRule="evenodd"
               onAnimationEnd={
                 i === byLetters.length - 1
-                  ? onAnimationComplete
+                  ? handleLastLetterAnimation
                   : undefined
               }
             />
