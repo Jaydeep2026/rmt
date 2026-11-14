@@ -13,7 +13,7 @@ export default function Footer() {
         </a>
 
         <p className="footer__mid">
-          React Material Template <i>·</i> A website solution by Verligte
+          RMT by Verligte <i>·</i> A web solution by Verligte
         </p>
 
         <nav className="footer__links" aria-label="Footer">
