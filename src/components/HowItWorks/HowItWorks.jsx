@@ -2,7 +2,7 @@ import useInView from "../../hooks/useInView.js";
 import "./HowItWorks.css";
 
 const STEPS = [
-  { title: "Website Brief & Content", text: "Share your business details, website requirements and content with us." },
+  { title: "Affordable & Efficient Development", text: "Professional websites delivered through a streamlined development process, with quicker turnaround and affordable investments." },
   { title: "Sitemap & Scope of Work", text: "We map out the website structure, pages and deliverables for your approval." },
   { title: "Layout Development", text: "We bring your content to life through a distinctive layout using our RMT framework." },
   { title: "Client Submission & Corrections", text: "Review your website, share feedback and we'll make the agreed refinements." },
