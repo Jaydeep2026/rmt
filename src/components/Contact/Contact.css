@@ -136,6 +136,7 @@
   border: 0;
   border-radius: 0.3125rem;
   background: var(--orange);
+  border: 1px solid var(--orange);
   color: #fff;
   font-family: inherit;
   font-size: 0.9375rem;

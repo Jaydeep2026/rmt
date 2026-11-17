@@ -16,7 +16,7 @@ const WORK = [
   },
   {
     id: "ajr-website",
-    name: "AJR Infra",
+    name: "AJR Infra & Tolling Limited",
     category: "Infrastructure",
     type: "Multipage",
     description:
@@ -346,10 +346,10 @@ export default function Portfolio() {
           </div>
         )}
 
-        <div className="work__bottom">
+        {/* <div className="work__bottom">
           <p>Selected projects developed with RMT.</p>
           <span>{String(WORK.length).padStart(2, "0")} Projects</span>
-        </div>
+        </div> */}
       </div>
 
       {selected && (
@@ -404,7 +404,7 @@ export default function Portfolio() {
                 <div className="work__details-top">
                   <div className="work__details-heading">
                     <span className="work__eyebrow">
-                      PROJECT SHOWCASE
+                      Client Overview
                     </span>
 
                     <h2>{selected.name}</h2>
@@ -443,7 +443,7 @@ export default function Portfolio() {
 
             <div className="work__modal-footer">
               <p>
-                Built with <strong>RMT</strong>
+                Built by <strong>RMT</strong>
               </p>
 
               <a

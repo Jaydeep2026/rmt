@@ -254,9 +254,10 @@
 }
 
 .work__more-btn:hover {
-  transform: translateY(-0.1875rem);
-  border-color: var(--ink);
-  background: var(--ink);
+  gap: 0.875rem;
+  transform: translateY(-0.0625rem);
+  background: #fff;
+  color: var(--orange);
 }
 
 .work__more-btn svg {
@@ -803,4 +804,17 @@
   .work__skeleton-shimmer {
     animation: none;
   }
+}
+.work__more-btn svg {
+  rotate: 90deg;              
+  transition: rotate 0.25s ease;
+}
+
+.work__more-btn:hover svg {
+  rotate: 90deg;            
+}
+
+.work__more-btn[aria-expanded="true"] svg,
+.work__more-btn[aria-expanded="true"]:hover svg {
+  rotate: -90deg;
 }

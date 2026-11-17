@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import IntlTelInput from "intl-tel-input/reactWithUtils";
+import ReCAPTCHA from "react-google-recaptcha";
 import "intl-tel-input/styles";
 import "./Contact.css";
 
@@ -70,35 +71,22 @@ function isFakePhone(e164) {
   return /^(\d)\1{5,}$/.test(last10) || FAKE_NUMBERS.includes(last10);
 }
 
-function getRecaptchaToken() {
-  return new Promise((resolve, reject) => {
-    if (!window.grecaptcha) {
-      reject(
-        new Error(
-          "Security check could not load. Please refresh the page and try again."
-        )
-      );
-      return;
-    }
-
-    window.grecaptcha.ready(() => {
-      window.grecaptcha
-        .execute(RECAPTCHA_SITE_KEY, { action: "contact_form" })
-        .then(resolve)
-        .catch(() =>
-          reject(
-            new Error("Security check failed. Please refresh and try again.")
-          )
-        );
-    });
-  });
+function FieldError({ message }) {
+  if (!message) return null;
+  return (
+    <small className="contact__error" role="alert">
+      {message}
+    </small>
+  );
 }
 
 export default function Contact() {
   const [v, setV] = useState(EMPTY);
   const [phone, setPhone] = useState(""); // E.164, e.g. +919876543210
   const [phoneValid, setPhoneValid] = useState(false);
-  const [phoneKey, setPhoneKey] = useState(0); // remounts phone input to reset it
+  const phoneRef = useRef(null);
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState("");
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
   const [feedback, setFeedback] = useState("");
@@ -108,22 +96,6 @@ export default function Contact() {
     v.websiteType === "single" ? BUDGETS.single : BUDGETS.multipage;
 
   const closePopup = () => setPopup(null);
-
-  // Load reCAPTCHA v3 script once.
-  useEffect(() => {
-    if (!RECAPTCHA_SITE_KEY) {
-      console.error("VITE_RECAPTCHA_SITE_KEY is missing in your .env file.");
-      return;
-    }
-    if (document.getElementById("recaptcha-v3-script")) return;
-
-    const script = document.createElement("script");
-    script.id = "recaptcha-v3-script";
-    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-  }, []);
 
   // Close popup with Escape key.
   useEffect(() => {
@@ -192,6 +164,10 @@ export default function Contact() {
       err.website = "Enter a valid URL starting with http:// or https://";
     }
 
+    if (!captchaToken) {
+      err.captcha = "Please confirm that you are not a robot.";
+    }
+
     return err;
   };
 
@@ -213,8 +189,6 @@ export default function Contact() {
     setFeedback("");
 
     try {
-      const recaptchaToken = await getRecaptchaToken();
-
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -223,7 +197,7 @@ export default function Contact() {
           name: v.name.trim(),
           email: v.email.trim().toLowerCase(),
           phone,
-          recaptchaToken,
+          recaptchaToken: captchaToken,
         }),
       });
 
@@ -247,7 +221,11 @@ export default function Contact() {
       setV(EMPTY);
       setPhone("");
       setPhoneValid(false);
-      setPhoneKey((k) => k + 1);
+      try {
+        phoneRef.current?.getInstance()?.setNumber("");
+      } catch (err) {
+        console.warn("Could not clear phone input:", err);
+      }
       setErrors({});
       setPopup({
         type: "success",
@@ -265,18 +243,15 @@ export default function Contact() {
         message:
           error.message || "We couldn't send your enquiry. Please try again.",
       });
+    } finally {
+      // A v2 token can only be used once, so always reset the widget.
+      captchaRef.current?.reset();
+      setCaptchaToken("");
     }
   };
 
   const fieldClass = (field, extra = "") =>
     `${extra} ${errors[field] ? "has-error" : ""}`.trim();
-
-  const FieldError = ({ field }) =>
-    errors[field] ? (
-      <small className="contact__error" role="alert">
-        {errors[field]}
-      </small>
-    ) : null;
 
   return (
     <section className="contact" id="contact">
@@ -311,7 +286,7 @@ export default function Contact() {
               maxLength={100}
               required
             />
-            <FieldError field="name" />
+            <FieldError message={errors.name} />
           </label>
 
           <label>
@@ -340,7 +315,7 @@ export default function Contact() {
               maxLength={254}
               required
             />
-            <FieldError field="email" />
+            <FieldError message={errors.email} />
           </label>
 
           <div className={fieldClass("phone", "contact__field")}>
@@ -348,7 +323,7 @@ export default function Contact() {
               Phone / WhatsApp <span className="contact__required">*</span>
             </span>
             <IntlTelInput
-              key={phoneKey}
+              ref={phoneRef}
               onChangeNumber={onPhoneNumber}
               onChangeValidity={setPhoneValid}
               initOptions={{
@@ -356,7 +331,6 @@ export default function Contact() {
                 separateDialCode: true,
                 nationalMode: true,
                 strictMode: true,
-                dropdownContainer: document.body,
               }}
               inputProps={{
                 name: "phone",
@@ -365,7 +339,7 @@ export default function Contact() {
                 maxLength: 20,
               }}
             />
-            <FieldError field="phone" />
+            <FieldError message={errors.phone} />
           </div>
 
           <label className={fieldClass("websiteType", "full")}>
@@ -384,7 +358,7 @@ export default function Contact() {
               <option value="multipage">Multipage website</option>
               <option value="not-sure">Not sure yet</option>
             </select>
-            <FieldError field="websiteType" />
+            <FieldError message={errors.websiteType} />
           </label>
 
           <label className={fieldClass("budget", "full")}>
@@ -410,7 +384,7 @@ export default function Contact() {
                 </option>
               ))}
             </select>
-            <FieldError field="budget" />
+            <FieldError message={errors.budget} />
           </label>
 
           <label className="full">
@@ -436,8 +410,29 @@ export default function Contact() {
               autoComplete="url"
               maxLength={500}
             />
-            <FieldError field="website" />
+            <FieldError message={errors.website} />
           </label>
+
+          <div className="full contact__captcha">
+            {RECAPTCHA_SITE_KEY ? (
+              <ReCAPTCHA
+                ref={captchaRef}
+                sitekey={RECAPTCHA_SITE_KEY}
+                theme="dark"
+                onChange={(token) => {
+                  setCaptchaToken(token || "");
+                  clearError("captcha");
+                }}
+                onExpired={() => setCaptchaToken("")}
+                onErrored={() => setCaptchaToken("")}
+              />
+            ) : (
+              <small className="contact__error">
+                reCAPTCHA is not configured (VITE_RECAPTCHA_SITE_KEY missing).
+              </small>
+            )}
+            <FieldError message={errors.captcha} />
+          </div>
 
           <div className="full contact__actions">
             <button
@@ -471,25 +466,6 @@ export default function Contact() {
             )}
           </div>
 
-          <p className="full contact__recaptcha">
-            This site is protected by reCAPTCHA and the Google{" "}
-            <a
-              href="https://policies.google.com/privacy"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Privacy Policy
-            </a>{" "}
-            and{" "}
-            <a
-              href="https://policies.google.com/terms"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Terms of Service
-            </a>{" "}
-            apply.
-          </p>
         </form>
       </div>
 

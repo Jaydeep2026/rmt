@@ -28,8 +28,6 @@ export default function HowItWorks() {
             A simple, structured process to take your website from planning to launch.
           </p>
         </div>
-        {/* <h2 className="section-title">How it <em>works</em></h2>
-        <p className="eyebrow">A simple, structured process to take your website from planning to launch.</p> */}
         <ol className="how__steps" ref={ref}>
           {STEPS.map((s, i) => (
             <li className="how__step" key={s.title} style={{ "--i": i }}>
