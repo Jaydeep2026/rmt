@@ -185,12 +185,17 @@
   flex-shrink: 0;
   padding: 0.3rem 0.6rem;
   border-radius: 2rem;
-  background: #fff0e2;
-  color: #80532d;
+  background: var(--orange);
+  color: #fff;
   font-size: 0.7rem;
   font-weight: 600;
 }
 
+.work__card-title .work__type--single {
+  background: #fff;
+  color: var(--orange);
+  border: 1px solid var(--orange);
+}
 .work__card-info > p {
   margin: 0.35rem 0 0;
   color: var(--muted);

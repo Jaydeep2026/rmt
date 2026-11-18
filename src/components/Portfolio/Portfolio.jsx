@@ -211,7 +211,13 @@ function ProjectCard({ item, index, onOpen }) {
       <div className="work__card-info">
         <div className="work__card-title">
           <h3>{item.name}</h3>
-          <span>{item.type}</span>
+          <span
+            className={`work__type ${
+              item.type === "Single Page" ? "work__type--single" : ""
+            }`}
+          >
+            {item.type}
+          </span>
         </div>
         <p>{item.category}</p>
       </div>
